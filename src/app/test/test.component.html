@@ -1,0 +1,12 @@
+<p>test works!</p>My name:{{name}}
+<table>
+    <tr>
+        <td>
+            <app-child1 [name]="name" (chgedNM)="handlechgedNM($event)"></app-child1>
+        </td>
+        <td>
+            <app-child2  [recnm]="name" (replacedNM)="handlechgedNM($event)"></app-child2>
+        </td>
+
+    </tr>
+</table>
