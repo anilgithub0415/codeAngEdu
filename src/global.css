@@ -1,0 +1,18 @@
+:root {
+    --base-font-size: 3.2em;;
+  }
+  p{
+    font-size:3.2em;;
+  }
+  button{
+    font-size:4em;
+  }
+  body {
+    font-size: var(--base-font-size);
+  }
+  
+  @media (min-width: 368px) {
+    body {
+      font-size: 3.2em;
+    }
+  }

@@ -1,0 +1,106 @@
+Index
+//------------------------------------------------------------------------------------------
+display: flex
+display: grid
+Responsive images example
+Responsive Typography
+//------------------------------------------------------------------------------------------
+
+
+
+//sample css for display:flex
+.container {
+    display: flex;
+    flex-direction: row; /* Main axis is horizontal */
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+    padding: 10px;
+  }
+  
+  .item {
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Experiment with different flex values */
+  .item-grow {
+    flex: 2 0 auto; /* Grows twice as much */
+  }
+  
+  .item-shrink {
+    flex: 0 1 auto; /* Shrinks more readily */
+  }
+  
+  .item-fixed {
+    flex: 0 0 100px; /* Fixed width of 100px */
+  }
+
+  try html:
+  <div class="container">
+    <div class="item  item-grow">Item 1</div>
+    <div class="item  item-grow">Item 2</div>
+    <div class="item  item-grow">Item 3</div>
+    <div class="item  item-grow">Item 4</div>
+    <div class="item  item-grow">Item 5</div>
+  </div>
+
+
+
+
+
+
+
+
+//------------------------------------------------------------------------------------------
+//sample css for display:grid
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Create 3 equal-width grid tracks */
+    grid-template-rows: 200px 150px; /* Define row heights */
+    grid-gap: 20px; /* Set gap between grid items */
+  }
+  
+  .item {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+
+  try html:
+  <div class="container">
+    <div class="item  item-grow">Item 1</div>
+    <div class="item  item-grow">Item 2</div>
+    <div class="item  item-grow">Item 3</div>
+    <div class="item  item-grow">Item 4</div>
+    <div class="item  item-grow">Item 5</div>
+  </div>
+
+
+//------------------------------------------------------------------------------------------
+//Responsive images example
+<picture>
+  <source srcset="image-small.jpg 320w, image-medium.jpg 640w, image-large.jpg 1280w"
+          sizes="(max-width: 320px) 100vw, (max-width: 640px) 50vw, 100vw">
+  <img src="image-default.jpg" alt="Image description">
+</picture>
+
+srcset will display images depending on screenwidth
+outof srcset images if no image found then only img will display default image
+
+also make a note here , 
+if screensize less than or equal 320px, image will occupy full width that is 100%,
+if screensize less than or equal 640px, image will occupy 50%,
+otherwise 100%
+
+please study
+Additional Considerations:
+
+Image Optimization: Optimize your images for size and performance using tools like ImageOptim or TinyPNG.
+Art Direction: Consider creating different versions of your images for different screen sizes to ensure optimal quality and visual appeal.
+Lazy Loading: Implement lazy loading to defer loading of images until they are visible in the viewport, improving page load performance.
+
+
+
+//------------------------------------------------------------------------------------------
+//Responsive Typography
