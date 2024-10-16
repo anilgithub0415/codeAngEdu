@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { TypographyComponent } from './typography/typography.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

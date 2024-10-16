@@ -1,18 +1,31 @@
+/* Base font size */
 :root {
-    --base-font-size: 3.2em;;
+  --base-font-size: 4em;
+}
+
+/* Apply base font size to all elements */
+body {
+  font-size: var(--base-font-size);
+}
+
+/* Adjust font sizes for different screen sizes */
+@media (min-width: 320px) {
+  /* Mobile */
+  body,label, button, input[type="text"], input[type="checkbox"], p {
+    font-size: 0.8em;
   }
-  p{
-    font-size:3.2em;;
+}
+
+@media (min-width: 768px) {
+  /* Tablet */
+  body,label, button, input[type="text"], input[type="checkbox"], p {
+    font-size: 1.0em;
   }
-  button{
-    font-size:4em;
+}
+
+@media (min-width: 1024px) {
+  /* Desktop */
+  label, button, input[type="text"], input[type="checkbox"], p {
+    font-size: 1.4em;
   }
-  body {
-    font-size: var(--base-font-size);
-  }
-  
-  @media (min-width: 368px) {
-    body {
-      font-size: 3.2em;
-    }
-  }
+}
