@@ -1,0 +1,157 @@
+
+import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideHttpClient } from '@angular/common/http';
+
+import { appRoutes } from './app.routes';
+import { FormlyModule ,provideFormlyConfig} from '@ngx-formly/core';
+import { FormlyPrimeNGModule } from '@ngx-formly/primeng';
+import { RepeatSectionTypeComponent } from '../core/components/repeat-section-type/repeat-section-type.component';
+import { FormlySelectModule } from '@ngx-formly/core/select';
+
+// Define the Formly provider configuration in a separate constant
+const formlyProviders = importProvidersFrom(
+  FormlyModule.forRoot({
+    types: [
+      { name: 'repeat', component: RepeatSectionTypeComponent },
+    ],
+  }),
+  FormlyPrimeNGModule,
+    FormlySelectModule,
+);
+
+export const appConfig: ApplicationConfig = {
+  providers: [ formlyProviders,
+    provideRouter(appRoutes),
+    provideAnimations(), // Required for PrimeNG animations
+    provideHttpClient(),
+    provideFormlyConfig(), // Required for Formly to work with forms
+       
+  //  provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes)
+  ]
+};
+
+//----------------------------------------------------------------------------------------------
+ <!--repeatsectiontype html-->
+  <fieldset>
+    <legend *ngIf="field.props.label">{{ field.props.label }}</legend>
+    <p *ngIf="field.props.description">{{ field.props.description }}</p>
+  
+    <div *ngIf="field.fieldGroup">
+      <div *ngFor="let subField of field.fieldGroup; let i = index">
+        <formly-field [field]="subField"></formly-field>
+        <div>{{subField|json}}</div>
+        <button type="button" (click)="remove(i)">Remove</button>
+      </div>
+    </div>
+  
+    <button type="button" (click)="add()">Add Item</button>
+  </fieldset>
+
+
+//----------------------------------------------------------------------------------------------
+
+ts code
+
+import { CommonModule } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+import { FieldArrayType, FormlyFieldConfig } from '@ngx-formly/core';
+
+@Component({
+  selector: 'app-repeat-section-type',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule],
+  templateUrl: './repeat-section-type.component.html',
+  styleUrl: './repeat-section-type.component.scss'
+})
+export class RepeatSectionTypeComponent extends FieldArrayType {
+  // No need for custom add() and remove() methods; they are provided by FieldArrayType.
+  constructor() {
+    super();
+  }
+}
+
+
+//----------------------------------------------------------------------------------------------
+
+testcomp
+
+<p>testformly works!</p>
+<p>test-formly-repeat works!</p>
+
+<p-dialog [(visible)]="userDialog" [style]="{ width: '850px' }"  [modal]="true">
+  
+<div class="p-4">
+<form [formGroup]="form" (ngSubmit)="onSubmit(model)">
+    <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+    <button  type="submit">Submit</button>
+  </form>
+
+
+  <div class="mt-4">
+    <h4>Form Data</h4>
+    <!-- <pre>{{ form.value | json }}</pre> -->
+
+    <h4>Field Configuration</h4>
+    <pre>{{ fields | json }}</pre>
+  </div>
+</div>
+
+</p-dialog>
+
+
+//----------------------------------------------------------------------------------------------
+
+{
+  "name": "test2",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^19.1.0",
+    "@angular/cdk": "^19.1.0",
+    "@angular/common": "^19.1.0",
+    "@angular/compiler": "^19.1.0",
+    "@angular/core": "^19.1.0",
+    "@angular/forms": "^19.1.0",
+    "@angular/platform-browser": "^19.1.0",
+    "@angular/platform-browser-dynamic": "^19.1.0",
+    "@angular/router": "^19.1.0",
+    "@ngx-formly/core": "^7.0.0",
+    "@ngx-formly/primeng": "^7.0.0",
+    "primeng": "^19.0.8",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^19.1.8",
+    "@angular/cli": "^19.1.8",
+    "@angular/compiler-cli": "^19.1.0",
+    "@types/jasmine": "~5.1.0",
+    "jasmine-core": "~5.5.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.7.2"
+  }
+}
+
+
+//----------------------------------------------------------------------------------------------
+
+
+
+//----------------------------------------------------------------------------------------------
+
+
+
