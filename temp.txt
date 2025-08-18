@@ -37,37 +37,28 @@ sudo apt upgrade
 
 
 
-
-import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideAnimations, provideHttpClient } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideHttpClient } from '@angular/common/http';
 
-import { appRoutes } from './app.routes';
-import { FormlyModule ,provideFormlyConfig} from '@ngx-formly/core';
+import { FormlyModule } from '@ngx-formly/core';
 import { FormlyPrimeNGModule } from '@ngx-formly/primeng';
-import { RepeatSectionTypeComponent } from '../core/components/repeat-section-type/repeat-section-type.component';
 import { FormlySelectModule } from '@ngx-formly/core/select';
+import { Repeatsectiontype } from './core/components/repeatsectiontype/repeatsectiontype'; 
 
-// Define the Formly provider configuration in a separate constant
-const formlyProviders = importProvidersFrom(
-  FormlyModule.forRoot({
-    types: [
-      { name: 'repeat', component: RepeatSectionTypeComponent },
-    ],
-  }),
-  FormlyPrimeNGModule,
-    FormlySelectModule,
-);
+import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
-  providers: [ formlyProviders,
-    provideRouter(appRoutes),
-    provideAnimations(), // Required for PrimeNG animations
+  providers: [
+    provideRouter(routes),
+    provideAnimations(),
     provideHttpClient(),
-    provideFormlyConfig(), // Required for Formly to work with forms
-       
-  //  provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes)
+    importProvidersFrom(
+      FormlyModule.forRoot({
+        types: [{ name: 'repeat', component: Repeatsectiontype }],
+      }),
+      FormlyPrimeNGModule,
+      FormlySelectModule
+    )
   ]
 };
 
@@ -140,40 +131,37 @@ testcomp
 </p-dialog>
 
 //---------------------------------------------------------------------------------------------
-
-import { CUSTOM_ELEMENTS_SCHEMA, Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { FormGroup, FormsModule } from '@angular/forms';
-import { FormlyConfig, FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RepeatSectionTypeComponent } from '../../core/components/repeat-section-type/repeat-section-type.component';
-import { InputTextModule } from 'primeng/inputtext';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 
-import{DialogModule} from 'primeng/dialog'
-import { FormlyPrimeNGModule } from '@ngx-formly/primeng';
-import { FormlySelectModule } from '@ngx-formly/core/select';
+// Remove all the module imports from here
+// import { FormlyPrimeNGModule } from '@ngx-formly/primeng';
+// import { FormlySelectModule } from '@ngx-formly/core/select';
+// import { DialogModule } from 'primeng/dialog';
+// import { InputTextModule } from 'primeng/inputtext';
+// import { Repeatsectiontype } from '../core/components/repeatsectiontype/repeatsectiontype';
 
 @Component({
   selector: 'app-testformly',
   standalone: true,
-  schemas:[CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, ReactiveFormsModule,FormsModule,],  
-
-  templateUrl: './testformly.component.html',
-  styleUrl: './testformly.component.scss',
-  
+  // The correct imports for a standalone component using Formly
+  imports: [
+    CommonModule, 
+    ReactiveFormsModule,
+    FormlyModule // This is okay if you need Formly directives, but the providers come from app.config
+  ],
+  templateUrl: './testformly.html',
+  styleUrl: './testformly.scss'
 })
-export class TestformlyComponent {
-  userDialog:boolean=false;
-
+export class Testformly implements OnInit {
+  userDialog: boolean = false;
   form = new FormGroup({});
   model = {
-    //options: [{name: 'Default Item Name'}],
-    options:[]
+    options: [{'name':'aaa'}]
   };
   fields: FormlyFieldConfig[] = [
-  //  {key:'nm',type:'input',props:{label:'nm:'}},
     {
       key: 'options',
       type: 'repeat',
@@ -183,7 +171,7 @@ export class TestformlyComponent {
       },
       fieldArray: {
         fieldGroup: [
-          {key:'nm1',type:'input',props:{label:'nm1:'}},
+          { key: 'nm1', type: 'input', props: { label: 'nm1:' } },
           {
             key: 'name',
             type: 'input',
@@ -192,27 +180,20 @@ export class TestformlyComponent {
               placeholder: 'Enter item name',
               required: true,
             },
-            // This is the important change: disable wrappers
-        //    wrappers: [],
           },
         ],
       },
-      // This is also important: disable wrappers on the parent
-      //wrappers: [],
     },
   ];
 
   onSubmit(model: any) {
-    //console.log(model);
-console.log(this.form.value);
-
+    console.log(this.form.value);
   }
-  
-  ngOnInit(){
+
+  ngOnInit() {
     setTimeout(() => {
-      this.userDialog=true;
+      this.userDialog = true;
     }, 3000);
-//alert('m invoking........')
   }
 }
 
