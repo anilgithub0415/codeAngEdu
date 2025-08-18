@@ -11,6 +11,23 @@ ps -aux | grep apt
 check for culprit:
 Cloud Sync Services, Torrent Client, Media or Game Launchers
 
+
+. Disable Core System Updates (APT)
+Open the "Software & Updates" application. You can find this by clicking on the "Show Applications" icon (the grid of nine dots in the corner of your screen) and searching for "Software & Updates."
+
+In the "Software & Updates" window, click on the Updates tab.
+
+Look for the option labeled "Automatically check for updates" and change the value from its default (e.g., "Daily") to "Never."
+
+You may also want to change the setting for "When there are security updates" to "Display immediately" instead of "Download and install automatically."
+
+Click the Close button to save your changes. You will be prompted to enter your password.
+
+2. Disable Snap Updates
+Snaps also update automatically in the background. The easiest way to disable this is by using a terminal command.
+
+Open your terminal by pressing Ctrl + Alt + T.
+
 To stop all Snap applications from auto-updating indefinitely
 sudo snap refresh --hold=forever
 
