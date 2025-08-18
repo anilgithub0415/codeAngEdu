@@ -1,6 +1,15 @@
 
 
+sudo apt install nethogs
 
+sudo nethogs
+
+tail -f /var/log/apt/history.log
+ps -aux | grep apt
+
+
+check for culprit:
+Cloud Sync Services, Torrent Client, Media or Game Launchers
 
 import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
