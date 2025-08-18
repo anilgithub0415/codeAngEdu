@@ -139,6 +139,82 @@ testcomp
 
 </p-dialog>
 
+//---------------------------------------------------------------------------------------------
+
+import { CUSTOM_ELEMENTS_SCHEMA, Component,OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+import { FormGroup, FormsModule } from '@angular/forms';
+import { FormlyConfig, FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RepeatSectionTypeComponent } from '../../core/components/repeat-section-type/repeat-section-type.component';
+import { InputTextModule } from 'primeng/inputtext';
+
+import{DialogModule} from 'primeng/dialog'
+import { FormlyPrimeNGModule } from '@ngx-formly/primeng';
+import { FormlySelectModule } from '@ngx-formly/core/select';
+
+@Component({
+  selector: 'app-testformly',
+  standalone: true,
+  schemas:[CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, ReactiveFormsModule,FormsModule,],  
+
+  templateUrl: './testformly.component.html',
+  styleUrl: './testformly.component.scss',
+  
+})
+export class TestformlyComponent {
+  userDialog:boolean=false;
+
+  form = new FormGroup({});
+  model = {
+    //options: [{name: 'Default Item Name'}],
+    options:[]
+  };
+  fields: FormlyFieldConfig[] = [
+  //  {key:'nm',type:'input',props:{label:'nm:'}},
+    {
+      key: 'options',
+      type: 'repeat',
+      props: {
+        label: 'My Repeatable Section',
+        btnText: 'Add Item',
+      },
+      fieldArray: {
+        fieldGroup: [
+          {key:'nm1',type:'input',props:{label:'nm1:'}},
+          {
+            key: 'name',
+            type: 'input',
+            props: {
+              label: 'Item Name',
+              placeholder: 'Enter item name',
+              required: true,
+            },
+            // This is the important change: disable wrappers
+        //    wrappers: [],
+          },
+        ],
+      },
+      // This is also important: disable wrappers on the parent
+      //wrappers: [],
+    },
+  ];
+
+  onSubmit(model: any) {
+    //console.log(model);
+console.log(this.form.value);
+
+  }
+  
+  ngOnInit(){
+    setTimeout(() => {
+      this.userDialog=true;
+    }, 3000);
+//alert('m invoking........')
+  }
+}
 
 //----------------------------------------------------------------------------------------------
 
